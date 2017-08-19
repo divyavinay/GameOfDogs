@@ -9,12 +9,12 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    private var breedList = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         display()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,20 +26,14 @@ class ViewController: UIViewController {
         let dataProvider = DataProvider()
         let urlString = "https://dog.ceo/api/breeds/list"
         dataProvider.fetchData(urlString: urlString) { (JSONDictionary) in
-            let dogs = Dogs(dictionary: JSONDictionary)
-            print(dogs?.status ?? "No value")
-            print(dogs?.message ?? "No value")
+        guard let dogs = Dogs(dictionary: JSONDictionary) else { return }
+        for dog in dogs.message {
+            self.breedList.append(dog)
+            }
+            let randomImageGenerator = RandomImageGenerater()
+            let downLoadImageUrl = DownloadImageURL()
+            downLoadImageUrl.getImageURL(dogsList: randomImageGenerator.generateImage(breedList: self.breedList))
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
