@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="huy-mS-GA5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="aqs-E3-vvw">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,23 +9,72 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="7Ko-vi-MTt">
+        <!--Collection View Controller-->
+        <scene sceneID="tOm-c0-g1L">
             <objects>
-                <viewController id="huy-mS-GA5" customClass="ViewController" customModule="GameOfDogs" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ibS-99-5kR"/>
-                        <viewControllerLayoutGuide type="bottom" id="bN4-qY-bXb"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="EFF-oA-sch">
+                <collectionViewController id="wLL-MG-ffN" customClass="CollectionViewController" customModule="GameOfDogs" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="duq-c8-NxD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gt7-Gv-HtJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Cwp-qf-ihV">
+                            <size key="itemSize" width="200" height="200"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="5" minY="80" maxX="5" maxY="5"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="nGG-HA-iyO" customClass="DogCell" customModule="GameOfDogs" customModuleProvider="target">
+                                <rect key="frame" x="87.5" y="80" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nhn-GR-3Kv">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="Nhn-GR-3Kv" firstAttribute="top" secondItem="nGG-HA-iyO" secondAttribute="top" id="52Q-i4-6bx"/>
+                                    <constraint firstItem="Nhn-GR-3Kv" firstAttribute="leading" secondItem="nGG-HA-iyO" secondAttribute="leading" id="7xO-Cc-AIb"/>
+                                    <constraint firstAttribute="bottom" secondItem="Nhn-GR-3Kv" secondAttribute="bottom" id="JGE-3q-4oc"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nhn-GR-3Kv" secondAttribute="trailing" id="TUP-xM-d7k"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="dogImage" destination="Nhn-GR-3Kv" id="YGU-gB-idi"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="wLL-MG-ffN" id="Ep4-QV-UKv"/>
+                            <outlet property="delegate" destination="wLL-MG-ffN" id="lAU-uP-WsW"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="7AG-Dj-KAY"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8jU-xL-fJ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="48" y="62"/>
+            <point key="canvasLocation" x="-242.40000000000001" y="113.79310344827587"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="t8m-fc-cZf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aqs-E3-vvw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Bfm-UY-oez">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wLL-MG-ffN" kind="relationship" relationship="rootViewController" id="eb7-T0-LUR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iFP-sJ-MVH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1095" y="114"/>
         </scene>
     </scenes>
 </document>

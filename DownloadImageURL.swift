@@ -7,19 +7,29 @@
 //
 
 import UIKit
+import Foundation
 
 class DownloadImageURL {
     
-    var imageUrlArray = [String]()
-    
-    func getImageURL(dogsList: [String]) {
+    func getImageURL(dogBreedName:String, downloadedImage: @escaping(UIImage) -> Void) {
         let imageProvider = ImageProvider()
-        for index in 0...3 {
-            let urlString = "https://dog.ceo/api/breed/\(dogsList[index])/images/random"
-            imageProvider.fetchData(urlString: urlString) { (JSONDictionary) in
-                guard let dog = Dog(dictionary: JSONDictionary) else { return }
-                self.imageUrlArray.append(dog.message)
-            }
+        let urlString = "https://dog.ceo/api/breed/\(dogBreedName)/images/random"
+        imageProvider.fetchData(urlString: urlString) { (JSONDictionary) in
+            guard let dog = Dog(dictionary: JSONDictionary) else { return }
+           
+            let urlFromString = URL(string: dog.message)
+            guard let url = urlFromString else { return }
+            
+            let session = URLSession.shared
+            let task = session.dataTask(with: url, completionHandler: { (data, response, error) in
+                guard error == nil else { return }
+                guard let urlResponse = response as? HTTPURLResponse else { return }
+                guard urlResponse.statusCode == 200 else { return }
+                guard let data = data else { return }
+                guard let image = UIImage(data: data) else { return }
+                downloadedImage(image)
+            })
+            task.resume()
         }
     }
 }
