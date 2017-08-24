@@ -26,4 +26,9 @@ class RandomImageGenerater {
     func randomElement(array: [String]) -> Int {
         return Int(arc4random_uniform(UInt32(array.count)))
     }
+    
+    func randomDogPicker(listOfFourDogs: [String]) -> String {
+         let index = Int(arc4random_uniform(UInt32(listOfFourDogs.count)))
+         return listOfFourDogs[index]
+    }
 }
