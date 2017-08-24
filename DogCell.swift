@@ -11,10 +11,10 @@ import UIKit
 class DogCell: UICollectionViewCell {
     
     @IBOutlet weak var dogImage: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func prepareForReuse() {
         dogImage.image = nil
+        activityIndicator.stopAnimating()
     }
-    
-    
 }

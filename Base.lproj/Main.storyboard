@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Collection View Controller-->
+        <!--Game Of Dogs-->
         <scene sceneID="tOm-c0-g1L">
             <objects>
                 <collectionViewController id="wLL-MG-ffN" customClass="CollectionViewController" customModule="GameOfDogs" customModuleProvider="target" sceneMemberID="viewController">
@@ -31,6 +31,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="mcQ-Ku-fAY">
+                                            <rect key="frame" x="-87.5" y="-234" width="375" height="667"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </activityIndicatorView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nhn-GR-3Kv">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                         </imageView>
@@ -43,6 +47,7 @@
                                     <constraint firstAttribute="trailing" secondItem="Nhn-GR-3Kv" secondAttribute="trailing" id="TUP-xM-d7k"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="activityIndicator" destination="mcQ-Ku-fAY" id="PQ4-mW-x8v"/>
                                     <outlet property="dogImage" destination="Nhn-GR-3Kv" id="YGU-gB-idi"/>
                                 </connections>
                             </collectionViewCell>
@@ -52,7 +57,16 @@
                             <outlet property="delegate" destination="wLL-MG-ffN" id="lAU-uP-WsW"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="7AG-Dj-KAY"/>
+                    <navigationItem key="navigationItem" title="Game Of Dogs" id="7AG-Dj-KAY">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="X4a-0G-t8h">
+                            <connections>
+                                <action selector="nextButtonClicked:" destination="wLL-MG-ffN" id="Ymb-Fb-EaL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="duq-c8-NxD" id="VHI-Fn-1EU"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8jU-xL-fJ6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

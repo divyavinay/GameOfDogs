@@ -12,7 +12,7 @@ class RandomImageGenerater {
     
     var questionBank = [String]()
     
-    func generateImage(breedList: [String]) -> [String]{
+    func generateImage(breedList: [String]) -> [String] {
         for _ in 0...3 {
           var arrayIndex =  randomElement(array: breedList)
             if questionBank.contains(breedList[arrayIndex]) {
