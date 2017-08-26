@@ -8,25 +8,29 @@
 
 import UIKit
 
-class GameView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class GameView: UIViewController {
 
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+
     
-    private let reuseIdentifier = "Cell"
-    private let questionConstant = "Which of these dogs is a"
+    @IBOutlet weak var scoreLable: UILabel!
+    @IBOutlet weak var roundLabel: UILabel!
+    
+ 
+    let reuseIdentifier = "Cell"
+    let questionConstant = "Which of these dogs is a"
     let column: CGFloat = 2
     let inset: CGFloat = 8
     var selectedCell: DogCollectionViewCell?
     var cellSize: CGRect?
-    
-    @IBAction func nextButtonClick(_ sender: UIButton) {
-        getRandomDogs(breedList: listOfAllDogs)
-    }
-    
+    var score = 0
+    var round = 0
+    var selectedDog: String?
+   
     @IBOutlet weak var backButton: UIButton?
     private var listOfAllDogs = [String]()
-    private var question: String = ""
+    var question: String = ""
     
     var questionBank: [String] = [] {
         didSet {
@@ -36,58 +40,24 @@ class GameView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }
     }
     
+    @IBAction func checkAnswer(_ sender: Any) {
+        if selectedDog == question {
+            score = score + 10
+            scoreLable.text = String(score)
+            getNextQuestion()
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+    
         collectionView.dataSource = self
         collectionView.delegate = self
         self.collectionView.collectionViewLayout = CustomCollectionView()
         getData { (list) in
             self.listOfAllDogs = list
             self.getRandomDogs(breedList: list)
-        }
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return questionBank.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DogCollectionViewCell
-        cell.activityIndicator.startAnimating()
-        let dogName = questionBank[indexPath.row]
-        let downLoadImageUrl = DownloadImageURL()
-        downLoadImageUrl.getImageURL(dogBreedName: dogName) { (downloadedImage) in
-            DispatchQueue.main.async() {
-                cell.dogImage.image = downloadedImage
-                cell.activityIndicator.stopAnimating()
-                cell.activityIndicator.isHidden = true
-            }
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        cell.superview?.bringSubview(toFront: cell)
-        selectedCell = collectionView.cellForItem(at: indexPath) as? DogCollectionViewCell
-        cellSize = selectedCell?.frame
-        backButton?.addTarget(self, action: #selector(self.backButtonClicked), for: .touchUpInside)
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
-            cell.frame = collectionView.bounds
-            collectionView.isScrollEnabled = false
-        }, completion: nil)
-        
-        if questionBank[indexPath.row] == question {
-            print("Answer:\(question), selected: \(questionBank[indexPath.row])")
-        }
-        else {
-            print("Wrong answer")
         }
     }
     
@@ -122,5 +92,56 @@ class GameView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     @objc func backButtonClicked() {
         self.collectionView.sendSubview(toBack: self.selectedCell!)
         self.selectedCell?.frame = UICollectionViewCell.init(frame: self.cellSize!).frame
+    }
+    
+    func getNextQuestion() {
+        if round <= 10 {
+                round = round + 1
+                roundLabel.text = String(round)
+                getRandomDogs(breedList: listOfAllDogs)
+        }
+    }
+    
+}
+
+extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return questionBank.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DogCollectionViewCell
+        cell.activityIndicator.startAnimating()
+        let dogName = questionBank[indexPath.row]
+        let downLoadImageUrl = DownloadImageURL()
+        downLoadImageUrl.getImageURL(dogBreedName: dogName) { (downloadedImage) in
+            DispatchQueue.main.async() {
+                cell.dogImage.image = downloadedImage
+                cell.activityIndicator.stopAnimating()
+                cell.activityIndicator.isHidden = true
+            }
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        cell.superview?.bringSubview(toFront: cell)
+        selectedCell = collectionView.cellForItem(at: indexPath) as? DogCollectionViewCell
+        cellSize = selectedCell?.frame
+        backButton?.addTarget(self, action: #selector(self.backButtonClicked), for: .touchUpInside)
+        animateSelectedCell(cell: cell)
+        selectedDog = questionBank[indexPath.row]
+    }
+    
+    func animateSelectedCell(cell: UICollectionViewCell) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+            cell.frame = self.collectionView.bounds
+            self.collectionView.isScrollEnabled = false
+        }, completion: nil)
     }
 }
