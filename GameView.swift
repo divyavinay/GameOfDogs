@@ -12,13 +12,19 @@ class GameView: UIViewController, UICollectionViewDelegate, UICollectionViewData
 
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    
     private let reuseIdentifier = "Cell"
     private let questionConstant = "Which of these dogs is a"
+    let column: CGFloat = 2
+    let inset: CGFloat = 8
+    var selectedCell: DogCollectionViewCell?
+    var cellSize: CGRect?
     
     @IBAction func nextButtonClick(_ sender: UIButton) {
         getRandomDogs(breedList: listOfAllDogs)
     }
     
+    @IBOutlet weak var backButton: UIButton?
     private var listOfAllDogs = [String]()
     private var question: String = ""
     
@@ -32,8 +38,11 @@ class GameView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         collectionView.dataSource = self
         collectionView.delegate = self
+        self.collectionView.collectionViewLayout = CustomCollectionView()
         getData { (list) in
             self.listOfAllDogs = list
             self.getRandomDogs(breedList: list)
@@ -64,6 +73,16 @@ class GameView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        cell.superview?.bringSubview(toFront: cell)
+        selectedCell = collectionView.cellForItem(at: indexPath) as? DogCollectionViewCell
+        cellSize = selectedCell?.frame
+        backButton?.addTarget(self, action: #selector(self.backButtonClicked), for: .touchUpInside)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+            cell.frame = collectionView.bounds
+            collectionView.isScrollEnabled = false
+        }, completion: nil)
+        
         if questionBank[indexPath.row] == question {
             print("Answer:\(question), selected: \(questionBank[indexPath.row])")
         }
@@ -98,5 +117,10 @@ class GameView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         let randomImageGenerator = RandomImageGenerater()
         question = randomImageGenerator.randomDogPicker(listOfFourDogs: questionBank)
         self.questionLabel.text = "\(questionConstant) \(self.question) ?"
+    }
+    
+    @objc func backButtonClicked() {
+        self.collectionView.sendSubview(toBack: self.selectedCell!)
+        self.selectedCell?.frame = UICollectionViewCell.init(frame: self.cellSize!).frame
     }
 }
