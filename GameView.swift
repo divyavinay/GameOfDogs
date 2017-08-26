@@ -55,6 +55,13 @@ class GameView: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         self.collectionView.collectionViewLayout = CustomCollectionView()
+        
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        UIImage(named: "dark-grunge-background2")?.draw(in: self.view.bounds)
+        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        self.view.backgroundColor = UIColor(patternImage: image)
+      
         getData { (list) in
             self.listOfAllDogs = list
             self.getRandomDogs(breedList: list)
@@ -95,13 +102,14 @@ class GameView: UIViewController {
     }
     
     func getNextQuestion() {
-        if round <= 10 {
+        if round < 1 {
                 round = round + 1
                 roundLabel.text = String(round)
                 getRandomDogs(breedList: listOfAllDogs)
+        } else {
+            performSegue(withIdentifier: "scoreSegue", sender: nil)
         }
     }
-    
 }
 
 extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
