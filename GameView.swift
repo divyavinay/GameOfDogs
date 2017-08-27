@@ -12,21 +12,16 @@ class GameView: UIViewController {
 
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
-
-    
     @IBOutlet weak var scoreLable: UILabel!
     @IBOutlet weak var roundLabel: UILabel!
     
- 
-    let reuseIdentifier = "Cell"
-    let questionConstant = "Which of these dogs is a"
-    let column: CGFloat = 2
-    let inset: CGFloat = 8
-    var selectedCell: DogCollectionViewCell?
-    var cellSize: CGRect?
-    var score = 0
-    var round = 0
-    var selectedDog: String?
+    //let column: CGFloat = 2
+    //let inset: CGFloat = 8
+   fileprivate var selectedCell: DogCollectionViewCell?
+   fileprivate var cellSize: CGRect?
+   private var score = 0
+   private var round = 0
+   fileprivate var selectedDog: String?
    
     @IBOutlet weak var backButton: UIButton?
     private var listOfAllDogs = [String]()
@@ -46,8 +41,10 @@ class GameView: UIViewController {
             scoreLable.text = String(score)
             getNextQuestion()
         }
+        else {
+            getNextQuestion()
+        }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +88,7 @@ class GameView: UIViewController {
     }
     
     func generateQuestion() {
+        let questionConstant = "Which of these dogs is a"
         let randomImageGenerator = RandomImageGenerater()
         question = randomImageGenerator.randomDogPicker(listOfFourDogs: questionBank)
         self.questionLabel.text = "\(questionConstant) \(self.question) ?"
@@ -102,13 +100,21 @@ class GameView: UIViewController {
     }
     
     func getNextQuestion() {
-        if round < 1 {
+        if round < 10 {
                 round = round + 1
                 roundLabel.text = String(round)
                 getRandomDogs(breedList: listOfAllDogs)
         } else {
-            performSegue(withIdentifier: "scoreSegue", sender: nil)
+            navigateToScoresView()
         }
+    }
+    
+    func navigateToScoresView() {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let scoresView = storyBoard.instantiateViewController(withIdentifier: "scoresViewID") as! ScoresView
+        scoresView.score = String(score)
+        let navController = UINavigationController(rootViewController: scoresView)
+        self.present(navController, animated:true, completion: nil)
     }
 }
 
@@ -122,6 +128,7 @@ extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let reuseIdentifier = "Cell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DogCollectionViewCell
         cell.activityIndicator.startAnimating()
         let dogName = questionBank[indexPath.row]

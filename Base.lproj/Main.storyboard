@@ -172,7 +172,7 @@
                         <outlet property="questionLabel" destination="RPd-xM-oRs" id="YGp-wg-wov"/>
                         <outlet property="roundLabel" destination="Eyf-RP-Vo8" id="m8y-oA-SV0"/>
                         <outlet property="scoreLable" destination="5Rj-Mm-jWg" id="v2w-mq-g2b"/>
-                        <segue destination="jJf-Zx-dnD" kind="presentation" identifier="scoreSegue" id="JjH-wb-VYS"/>
+                        <segue destination="06h-3p-mXg" kind="presentation" identifier="scoreSegue" id="JUP-h6-imB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8e-y8-ukd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -182,7 +182,7 @@
         <!--Game of Dogs-->
         <scene sceneID="0b7-yc-vuG">
             <objects>
-                <viewController id="06h-3p-mXg" customClass="ScoresView" customModule="GameOfDogs" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="scoresViewID" id="06h-3p-mXg" customClass="ScoresView" customModule="GameOfDogs" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0Tg-hb-FyT"/>
                         <viewControllerLayoutGuide type="bottom" id="hCp-fZ-lTp"/>
@@ -192,55 +192,55 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dark-grunge-background2" translatesAutoresizingMaskIntoConstraints="NO" id="k7h-Oa-YV0">
-                                <rect key="frame" x="20" y="64" width="374" height="672"/>
+                                <rect key="frame" x="20" y="20" width="374" height="716"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="eqb-ei-ajl">
-                                <rect key="frame" x="145" y="254" width="98.666666666666657" height="21"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0X4-ru-D4E">
-                                        <rect key="frame" x="0.0" y="0.0" width="79" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="7oW-cd-46L"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
-                                        <color key="textColor" red="0.66274509803921566" green="0.80784313725490198" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HUE-Ll-Ac2">
-                                        <rect key="frame" x="82" y="0.0" width="16.666666666666657" height="21"/>
-                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
-                                        <color key="textColor" red="0.98241180181503296" green="0.99271851778030396" blue="0.9835619330406189" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLH-2A-ykr">
-                                <rect key="frame" x="104" y="349" width="206" height="38"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLH-2A-ykr">
+                                <rect key="frame" x="80" y="368" width="255.33333333333331" height="38"/>
                                 <color key="backgroundColor" red="0.66274509803921566" green="0.80784313725490198" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="20"/>
                                 <state key="normal" title="Play Again!">
                                     <color key="titleColor" red="0.98241180181503296" green="0.99271851778030396" blue="0.9835619330406189" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="7yH-rZ-tpE">
+                                <rect key="frame" x="147.33333333333337" y="270.66666666666674" width="120.66666666666663" height="30.333333333333314"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0X4-ru-D4E">
+                                        <rect key="frame" x="0.0" y="0.0" width="79" height="30.333333333333314"/>
+                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                        <color key="textColor" red="0.66274509803921566" green="0.80784313725490198" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HUE-Ll-Ac2">
+                                        <rect key="frame" x="104" y="0.0" width="16.666666666666657" height="30.333333333333314"/>
+                                        <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="24"/>
+                                        <color key="textColor" red="0.98241180181503296" green="0.99271851778030396" blue="0.9835619330406189" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="LLH-2A-ykr" firstAttribute="centerX" secondItem="qzq-OC-gZY" secondAttribute="centerX" id="2YW-oa-TQE"/>
-                            <constraint firstItem="eqb-ei-ajl" firstAttribute="leading" secondItem="qzq-OC-gZY" secondAttribute="leadingMargin" constant="125" id="7x1-4Q-OBu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="k7h-Oa-YV0" secondAttribute="trailing" id="J3F-HB-S44"/>
-                            <constraint firstItem="LLH-2A-ykr" firstAttribute="leading" secondItem="qzq-OC-gZY" secondAttribute="leadingMargin" constant="84" id="LiC-Ue-RUD"/>
-                            <constraint firstItem="hCp-fZ-lTp" firstAttribute="top" secondItem="k7h-Oa-YV0" secondAttribute="bottom" id="Shp-O8-eQG"/>
-                            <constraint firstItem="k7h-Oa-YV0" firstAttribute="top" secondItem="eqb-ei-ajl" secondAttribute="bottom" constant="-211" id="Wno-mW-4TW"/>
-                            <constraint firstItem="LLH-2A-ykr" firstAttribute="top" secondItem="eqb-ei-ajl" secondAttribute="bottom" constant="74" id="iN4-xE-eaV"/>
-                            <constraint firstItem="k7h-Oa-YV0" firstAttribute="leading" secondItem="qzq-OC-gZY" secondAttribute="leadingMargin" id="jl3-tW-OT8"/>
-                            <constraint firstItem="eqb-ei-ajl" firstAttribute="top" secondItem="0Tg-hb-FyT" secondAttribute="bottom" constant="190" id="whc-1F-qWd"/>
+                            <constraint firstItem="k7h-Oa-YV0" firstAttribute="leading" secondItem="qzq-OC-gZY" secondAttribute="leadingMargin" id="7zS-5V-FUO"/>
+                            <constraint firstItem="LLH-2A-ykr" firstAttribute="centerX" secondItem="k7h-Oa-YV0" secondAttribute="centerX" id="D9X-XG-2O2"/>
+                            <constraint firstItem="LLH-2A-ykr" firstAttribute="leading" secondItem="7yH-rZ-tpE" secondAttribute="trailing" constant="-187.66666666666669" id="XFl-2a-GzB"/>
+                            <constraint firstItem="k7h-Oa-YV0" firstAttribute="top" secondItem="0Tg-hb-FyT" secondAttribute="bottom" id="eWp-Xd-COi"/>
+                            <constraint firstItem="k7h-Oa-YV0" firstAttribute="bottom" secondItem="hCp-fZ-lTp" secondAttribute="top" id="jDM-Pn-CQz"/>
+                            <constraint firstItem="LLH-2A-ykr" firstAttribute="centerX" secondItem="qzq-OC-gZY" secondAttribute="centerX" id="kAc-1v-i3w"/>
+                            <constraint firstItem="7yH-rZ-tpE" firstAttribute="centerX" secondItem="LLH-2A-ykr" secondAttribute="centerX" id="lFK-7a-4Ck"/>
+                            <constraint firstItem="LLH-2A-ykr" firstAttribute="top" secondItem="7yH-rZ-tpE" secondAttribute="bottom" constant="67" id="mRI-Ut-efX"/>
+                            <constraint firstItem="hCp-fZ-lTp" firstAttribute="top" secondItem="LLH-2A-ykr" secondAttribute="bottom" constant="330" id="mRv-qA-NAo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Game of Dogs" id="utv-Wf-sWp"/>
+                    <connections>
+                        <outlet property="scoreLabel" destination="HUE-Ll-Ac2" id="0NJ-T3-d9g"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="53p-a6-Ovz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4050.7246376811599" y="114.94565217391305"/>
+            <point key="canvasLocation" x="3466.666666666667" y="114.94565217391305"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VnQ-lS-wEJ">
@@ -259,24 +259,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lso-aM-Z59" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1540.5797101449277" y="114.94565217391305"/>
-        </scene>
-        <!--Game of Dogs-->
-        <scene sceneID="BFX-wB-KZB">
-            <objects>
-                <navigationController title="Game of Dogs" automaticallyAdjustsScrollViewInsets="NO" id="jJf-Zx-dnD" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="b5C-e0-L9k">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="06h-3p-mXg" kind="relationship" relationship="rootViewController" id="heh-gP-V3h"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2al-5M-5Mc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3247.826086956522" y="114.94565217391305"/>
         </scene>
     </scenes>
     <resources>

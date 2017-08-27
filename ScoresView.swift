@@ -9,11 +9,19 @@
 import UIKit
 
 class ScoresView: UIViewController {
+    
+    @IBOutlet weak var scoreLabel: UILabel!
+    var score: String? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        scoreLabel.text = score
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
 
     override func didReceiveMemoryWarning() {
