@@ -9,9 +9,12 @@
 import UIKit
 import Foundation
 
-class DownloadImageURL {
-    
-    func getImageURL(dogBreedName:String, downloadedImage: @escaping(UIImage) -> Void) {
+protocol DownloadImageProtocol {
+   func getImage(dogBreedName:String, downloadedImage: @escaping(UIImage) -> Void)
+}
+
+class DownloadImage: DownloadImageProtocol {
+    func getImage(dogBreedName:String, downloadedImage: @escaping(UIImage) -> Void) {
         let imageProvider = ImageProvider()
         let urlString = "https://dog.ceo/api/breed/\(dogBreedName)/images/random"
         imageProvider.fetchData(urlString: urlString) { (JSONDictionary) in

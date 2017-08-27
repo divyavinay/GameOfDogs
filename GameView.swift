@@ -9,25 +9,28 @@
 import UIKit
 
 class GameView: UIViewController {
-
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var scoreLable: UILabel!
     @IBOutlet weak var roundLabel: UILabel!
-    
-    //let column: CGFloat = 2
-    //let inset: CGFloat = 8
-   fileprivate var selectedCell: DogCollectionViewCell?
-   fileprivate var cellSize: CGRect?
-   private var score = 0
-   private var round = 0
-   fileprivate var selectedDog: String?
-   
     @IBOutlet weak var backButton: UIButton?
-    private var listOfAllDogs = [String]()
-    var question: String = ""
     
-    var questionBank: [String] = [] {
+    fileprivate var selectedCell: DogCollectionViewCell?
+    fileprivate var cellSize: CGRect?
+    fileprivate var selectedDog: String?
+    
+    private var score = 0
+    private var round = 0
+    private var listOfAllDogs = [String]()
+    private var question: String = ""
+    
+    // protocols
+    private var interactor: InteractorProtocol!
+    private var wireframe: WirefameProtocol!
+    private var random: RandomQuestionManagerProtocol!
+    fileprivate var imageDownloader: DownloadImageProtocol!
+    
+    fileprivate var questionBank: [String] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.collectionView?.reloadData()
@@ -49,39 +52,42 @@ class GameView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        self.collectionView.collectionViewLayout = CustomCollectionView()
-        
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        UIImage(named: "dark-grunge-background2")?.draw(in: self.view.bounds)
-        let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        self.view.backgroundColor = UIColor(patternImage: image)
-      
-        getData { (list) in
+        instantiateProtocolObjects()
+        setupCollectionView()
+        setupBackgroundImage()
+        fetchData()
+    }
+    
+    func instantiateProtocolObjects() {
+        interactor = Interactor()
+        random = RandomQuestionManager()
+        wireframe = GameOfDogsWireframe()
+        imageDownloader = DownloadImage()
+    }
+    
+    func fetchData() {
+        interactor.getBreedList { list in
             self.listOfAllDogs = list
             self.getRandomDogs(breedList: list)
         }
     }
     
-    func getData(list: @escaping ([String]) -> Void ) {
-        var breedList = [String]()
-        let dataProvider = DataProvider()
-        let urlString = "https://dog.ceo/api/breeds/list"
-        dataProvider.fetchData(urlString: urlString) { (JSONDictionary) in
-            guard let dogs = Dogs(dictionary: JSONDictionary) else { return }
-            for dog in dogs.message {
-                breedList.append(dog)
-                print(dog)
-            }
-            list(breedList)
-        }
+    func setupCollectionView() {
+        collectionView.collectionViewLayout = CustomCollectionView()
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+    
+    func setupBackgroundImage() {
+        UIGraphicsBeginImageContext(view.frame.size)
+        UIImage(named: "dark-grunge-background2")?.draw(in: view.bounds)
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        view.backgroundColor = UIColor(patternImage: image)
     }
     
     func getRandomDogs(breedList: [String]) {
-        let randomImageGenerator = RandomImageGenerater()
-        questionBank = randomImageGenerator.generateImage(breedList: breedList)
+        questionBank = random.generateImage(breedList: breedList)
         DispatchQueue.main.async {
             self.generateQuestion()
         }
@@ -89,32 +95,25 @@ class GameView: UIViewController {
     
     func generateQuestion() {
         let questionConstant = "Which of these dogs is a"
-        let randomImageGenerator = RandomImageGenerater()
-        question = randomImageGenerator.randomDogPicker(listOfFourDogs: questionBank)
+        question = random.randomDogPicker(listOfFourDogs: questionBank)
         self.questionLabel.text = "\(questionConstant) \(self.question) ?"
     }
     
     @objc func backButtonClicked() {
-        self.collectionView.sendSubview(toBack: self.selectedCell!)
-        self.selectedCell?.frame = UICollectionViewCell.init(frame: self.cellSize!).frame
+        guard let cell = selectedCell else { return }
+        collectionView.sendSubview(toBack: cell)
+        guard let size = cellSize else { return }
+        selectedCell?.frame = UICollectionViewCell.init(frame: size).frame
     }
     
     func getNextQuestion() {
-        if round < 10 {
+        if round < 1 {
                 round = round + 1
                 roundLabel.text = String(round)
                 getRandomDogs(breedList: listOfAllDogs)
         } else {
-            navigateToScoresView()
+            wireframe.navigateToScoresView(score: score, view: self)
         }
-    }
-    
-    func navigateToScoresView() {
-        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let scoresView = storyBoard.instantiateViewController(withIdentifier: "scoresViewID") as! ScoresView
-        scoresView.score = String(score)
-        let navController = UINavigationController(rootViewController: scoresView)
-        self.present(navController, animated:true, completion: nil)
     }
 }
 
@@ -128,18 +127,17 @@ extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let reuseIdentifier = "Cell"
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! DogCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DogCollectionViewCell
         cell.activityIndicator.startAnimating()
         let dogName = questionBank[indexPath.row]
-        let downLoadImageUrl = DownloadImageURL()
-        downLoadImageUrl.getImageURL(dogBreedName: dogName) { (downloadedImage) in
+        imageDownloader.getImage(dogBreedName: dogName) { (downloadedImage) in
             DispatchQueue.main.async() {
                 cell.dogImage.image = downloadedImage
                 cell.activityIndicator.stopAnimating()
                 cell.activityIndicator.isHidden = true
             }
         }
+        
         return cell
     }
     

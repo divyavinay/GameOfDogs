@@ -51,12 +51,13 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Fws-hi-k1L">
-                                                                    <rect key="frame" x="140" y="90" width="20" height="20"/>
-                                                                </activityIndicatorView>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4cH-Zk-Cb6">
                                                                     <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
                                                                 </imageView>
+                                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Fws-hi-k1L">
+                                                                    <rect key="frame" x="140" y="89.333333333333329" width="20" height="20"/>
+                                                                    <color key="color" red="0.66367888450000001" green="0.80722856519999997" blue="0.2548189461" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                </activityIndicatorView>
                                                             </subviews>
                                                         </view>
                                                         <constraints>
@@ -177,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B8e-y8-ukd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2447.826086956522" y="114.94565217391305"/>
+            <point key="canvasLocation" x="3355.072463768116" y="114.94565217391305"/>
         </scene>
         <!--Game of Dogs-->
         <scene sceneID="0b7-yc-vuG">
@@ -240,7 +241,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="53p-a6-Ovz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3466.666666666667" y="114.94565217391305"/>
+            <point key="canvasLocation" x="4373.913043478261" y="114.94565217391305"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VnQ-lS-wEJ">
@@ -258,7 +259,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lso-aM-Z59" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1540.5797101449277" y="114.94565217391305"/>
+            <point key="canvasLocation" x="2447.826086956522" y="114.94565217391305"/>
         </scene>
     </scenes>
     <resources>

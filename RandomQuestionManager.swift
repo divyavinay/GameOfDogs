@@ -8,11 +8,15 @@
 
 import UIKit
 
-class RandomImageGenerater {
-    
-    var questionBank = [String]()
+protocol RandomQuestionManagerProtocol {
+    func generateImage(breedList: [String]) -> [String]
+    func randomDogPicker(listOfFourDogs: [String]) -> String
+}
+
+class RandomQuestionManager: RandomQuestionManagerProtocol  {
     
     func generateImage(breedList: [String]) -> [String] {
+        var questionBank = [String]()
         for _ in 0...3 {
           var arrayIndex =  randomElement(array: breedList)
             if questionBank.contains(breedList[arrayIndex]) {
