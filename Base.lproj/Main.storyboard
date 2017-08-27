@@ -202,6 +202,9 @@
                                 <state key="normal" title="Play Again!">
                                     <color key="titleColor" red="0.98241180181503296" green="0.99271851778030396" blue="0.9835619330406189" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="cTf-Gc-ggJ" kind="presentation" id="cA4-ZH-StE"/>
+                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="7yH-rZ-tpE">
                                 <rect key="frame" x="147.33333333333337" y="270.66666666666674" width="120.66666666666663" height="30.333333333333314"/>

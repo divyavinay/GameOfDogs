@@ -25,10 +25,9 @@ class GameView: UIViewController {
     private var question: String = ""
     
     // protocols
-    private var interactor: InteractorProtocol!
     private var wireframe: WirefameProtocol!
-    private var random: RandomQuestionManagerProtocol!
-    fileprivate var imageDownloader: DownloadImageProtocol!
+    private var random: RandomQuestionHelperProtocol!
+    fileprivate var interactor: InteractorProtocol!
     
     fileprivate var questionBank: [String] = [] {
         didSet {
@@ -60,13 +59,12 @@ class GameView: UIViewController {
     
     func instantiateProtocolObjects() {
         interactor = Interactor()
-        random = RandomQuestionManager()
+        random = RandomQuestionHelper()
         wireframe = GameOfDogsWireframe()
-        imageDownloader = DownloadImage()
     }
     
     func fetchData() {
-        interactor.getBreedList { list in
+        interactor.fetchBreedList { list in
             self.listOfAllDogs = list
             self.getRandomDogs(breedList: list)
         }
@@ -107,7 +105,7 @@ class GameView: UIViewController {
     }
     
     func getNextQuestion() {
-        if round < 1 {
+        if round < 10 {
                 round = round + 1
                 roundLabel.text = String(round)
                 getRandomDogs(breedList: listOfAllDogs)
@@ -130,7 +128,7 @@ extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DogCollectionViewCell
         cell.activityIndicator.startAnimating()
         let dogName = questionBank[indexPath.row]
-        imageDownloader.getImage(dogBreedName: dogName) { (downloadedImage) in
+        interactor.downloadImage(dogBreedName: dogName) { (downloadedImage) in
             DispatchQueue.main.async() {
                 cell.dogImage.image = downloadedImage
                 cell.activityIndicator.stopAnimating()

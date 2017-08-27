@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol RandomQuestionManagerProtocol {
+protocol RandomQuestionHelperProtocol {
     func generateImage(breedList: [String]) -> [String]
     func randomDogPicker(listOfFourDogs: [String]) -> String
 }
 
-class RandomQuestionManager: RandomQuestionManagerProtocol  {
+class RandomQuestionHelper: RandomQuestionHelperProtocol  {
     
     func generateImage(breedList: [String]) -> [String] {
         var questionBank = [String]()
