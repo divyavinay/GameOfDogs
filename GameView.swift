@@ -27,6 +27,7 @@ class GameView: UIViewController {
     // protocols
     private var wireframe: WirefameProtocol!
     private var random: RandomQuestionHelperProtocol!
+    fileprivate var presenter: PresenterProtocol!
     fileprivate var interactor: InteractorProtocol!
     
     fileprivate var questionBank: [String] = [] {
@@ -59,12 +60,13 @@ class GameView: UIViewController {
     
     func instantiateProtocolObjects() {
         interactor = Interactor()
+        presenter = Presenter(interactor: Interactor())
         random = RandomQuestionHelper()
         wireframe = GameOfDogsWireframe()
     }
     
     func fetchData() {
-        interactor.fetchBreedList { list in
+        presenter.fetchBreedList { list in
             self.listOfAllDogs = list
             self.getRandomDogs(breedList: list)
         }
@@ -128,7 +130,7 @@ extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DogCollectionViewCell
         cell.activityIndicator.startAnimating()
         let dogName = questionBank[indexPath.row]
-        interactor.downloadImage(dogBreedName: dogName) { (downloadedImage) in
+        presenter.fetchImage(dogBreedName: dogName) { (downloadedImage) in
             DispatchQueue.main.async() {
                 cell.dogImage.image = downloadedImage
                 cell.activityIndicator.stopAnimating()
