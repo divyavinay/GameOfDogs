@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cTf-Gc-ggJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bko-u0-rcc">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -192,7 +192,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dark-grunge-background2" translatesAutoresizingMaskIntoConstraints="NO" id="k7h-Oa-YV0">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Black-Grunge-Wallpapers" translatesAutoresizingMaskIntoConstraints="NO" id="k7h-Oa-YV0">
                                 <rect key="frame" x="20" y="20" width="374" height="716"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLH-2A-ykr">
@@ -246,6 +246,100 @@
             </objects>
             <point key="canvasLocation" x="4373.913043478261" y="114.94565217391305"/>
         </scene>
+        <!--Landing View-->
+        <scene sceneID="swJ-ZM-DzW">
+            <objects>
+                <viewController id="bko-u0-rcc" customClass="LandingView" customModule="GameOfDogs" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eDb-LM-ixd"/>
+                        <viewControllerLayoutGuide type="bottom" id="odf-p4-01Z"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7qB-Th-gQH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cover page" translatesAutoresizingMaskIntoConstraints="NO" id="oVx-2k-znS">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="QRp-k6-NBn">
+                                <rect key="frame" x="20" y="28" width="155" height="33"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fWW-df-eoT">
+                                        <rect key="frame" x="0.0" y="0.0" width="155" height="33"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W8O-aH-O8s">
+                                                <rect key="frame" x="0.0" y="0.0" width="109" height="33"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="109" id="DMh-Z2-8dq"/>
+                                                    <constraint firstAttribute="height" constant="33" id="Y4s-Wg-2Yf"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="30"/>
+                                                <color key="textColor" red="0.66274509803921566" green="0.80784313725490198" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Of" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aKH-Kk-U6Y">
+                                                <rect key="frame" x="109" y="0.0" width="46" height="33"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="33" id="I7n-DM-LB9"/>
+                                                    <constraint firstAttribute="width" constant="46" id="g23-GN-iH7"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="30"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rf-87-gKU">
+                                <rect key="frame" x="60" y="645" width="295" height="39"/>
+                                <color key="backgroundColor" red="0.66274509803921566" green="0.80784313725490198" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="HSc-5b-KtC"/>
+                                    <constraint firstAttribute="width" constant="295" id="iJm-jE-FZ2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="20"/>
+                                <state key="normal" title="Play">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="cTf-Gc-ggJ" kind="presentation" id="0Rb-fo-OBb"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DOGS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BW7-cI-HX2">
+                                <rect key="frame" x="144" y="69" width="101" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="39" id="EQu-7j-ZZI"/>
+                                    <constraint firstAttribute="width" constant="101" id="QXV-Mx-XmG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="30"/>
+                                <color key="textColor" red="0.66274509803921566" green="0.80784313725490198" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="oVx-2k-znS" secondAttribute="trailing" id="I0H-DY-jxX"/>
+                            <constraint firstItem="BW7-cI-HX2" firstAttribute="top" secondItem="QRp-k6-NBn" secondAttribute="bottom" constant="8" id="Jth-wR-2dv"/>
+                            <constraint firstItem="QRp-k6-NBn" firstAttribute="leading" secondItem="BW7-cI-HX2" secondAttribute="leading" constant="-124" id="Met-M5-fQ8"/>
+                            <constraint firstItem="2rf-87-gKU" firstAttribute="leading" secondItem="7qB-Th-gQH" secondAttribute="leadingMargin" constant="40" id="Oof-G4-AsH"/>
+                            <constraint firstItem="QRp-k6-NBn" firstAttribute="top" secondItem="eDb-LM-ixd" secondAttribute="bottom" constant="8" symbolic="YES" id="VB5-5u-Jrk"/>
+                            <constraint firstItem="oVx-2k-znS" firstAttribute="leading" secondItem="7qB-Th-gQH" secondAttribute="leading" id="fBZ-8c-ZVX"/>
+                            <constraint firstItem="QRp-k6-NBn" firstAttribute="leading" secondItem="7qB-Th-gQH" secondAttribute="leadingMargin" id="lpW-UX-zjS"/>
+                            <constraint firstItem="odf-p4-01Z" firstAttribute="top" secondItem="2rf-87-gKU" secondAttribute="bottom" constant="52" id="mpz-Wd-70q"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2rf-87-gKU" secondAttribute="trailing" constant="39" id="rP5-eq-7nm"/>
+                            <constraint firstItem="oVx-2k-znS" firstAttribute="top" secondItem="7qB-Th-gQH" secondAttribute="top" id="xux-oU-fMk"/>
+                            <constraint firstItem="odf-p4-01Z" firstAttribute="top" secondItem="oVx-2k-znS" secondAttribute="bottom" id="zUB-Qf-hUO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="landingImage" destination="oVx-2k-znS" id="fjh-yn-gTt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Mk-iX-nMh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1462.3188405797102" y="114.94565217391305"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="VnQ-lS-wEJ">
             <objects>
@@ -266,6 +360,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="dark-grunge-background2" width="710" height="474"/>
+        <image name="Black-Grunge-Wallpapers" width="1920" height="1080"/>
+        <image name="Cover page" width="960" height="640"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="0Rb-fo-OBb"/>
+    </inferredMetricsTieBreakers>
 </document>

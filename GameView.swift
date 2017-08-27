@@ -80,7 +80,7 @@ class GameView: UIViewController {
     
     func setupBackgroundImage() {
         UIGraphicsBeginImageContext(view.frame.size)
-        UIImage(named: "dark-grunge-background2")?.draw(in: view.bounds)
+        UIImage(named: "Black-Grunge-Wallpapers")?.draw(in: view.bounds)
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         view.backgroundColor = UIColor(patternImage: image)
