@@ -21,7 +21,7 @@ class GameView: UIViewController {
     fileprivate var selectedDog: String?
     
     private var score = 0
-    private var round = 0
+    private var round = 1
     private var listOfAllDogs = [String]()
     private var question: String = ""
     
@@ -53,8 +53,8 @@ class GameView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        disableButton()
         
+        disableButton()
         instantiateProtocolObjects()
         setupCollectionView()
         setupBackgroundImage()
