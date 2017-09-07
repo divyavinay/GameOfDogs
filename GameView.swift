@@ -14,6 +14,7 @@ class GameView: UIViewController {
     @IBOutlet weak var scoreLable: UILabel!
     @IBOutlet weak var roundLabel: UILabel!
     @IBOutlet weak var backButton: UIButton?
+    @IBOutlet weak var checkAnswer: UIButton!
     
     fileprivate var selectedCell: DogCollectionViewCell?
     fileprivate var cellSize: CGRect?
@@ -29,6 +30,7 @@ class GameView: UIViewController {
     private var random: RandomQuestionHelperProtocol!
     fileprivate var presenter: PresenterProtocol!
     fileprivate var interactor: InteractorProtocol!
+    private var networkHelper: NetworkkHelper!
     
     fileprivate var questionBank: [String] = [] {
         didSet {
@@ -51,7 +53,8 @@ class GameView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        disableButton()
+        
         instantiateProtocolObjects()
         setupCollectionView()
         setupBackgroundImage()
@@ -63,12 +66,20 @@ class GameView: UIViewController {
         presenter = Presenter(interactor: Interactor())
         random = RandomQuestionHelper()
         wireframe = GameOfDogsWireframe()
+        networkHelper = NetworkkHelper()
     }
     
     func fetchData() {
-        presenter.fetchBreedList { list in
-            self.listOfAllDogs = list
-            self.getRandomDogs(breedList: list)
+        if networkHelper.isInternetAvailable() {
+            presenter.fetchBreedList { list in
+                self.listOfAllDogs = list
+                self.getRandomDogs(breedList: list)
+            }
+        }
+        else {
+            DispatchQueue.main.async {
+                self.createAlertController()
+            }
         }
     }
     
@@ -87,16 +98,25 @@ class GameView: UIViewController {
     }
     
     func getRandomDogs(breedList: [String]) {
-        questionBank = random.generateImage(breedList: breedList)
-        DispatchQueue.main.async {
-            self.generateQuestion()
+        if networkHelper.isInternetAvailable() {
+            questionBank = random.generateImage(breedList: breedList)
+            DispatchQueue.main.async {
+                self.generateQuestion()
+            }
+        }
+        else {
+            DispatchQueue.main.async {
+                self.createAlertController()
+            }
         }
     }
     
     func generateQuestion() {
+        
         let questionConstant = "Which of these dogs is a"
         question = random.randomDogPicker(listOfFourDogs: questionBank)
         self.questionLabel.text = "\(questionConstant) \(self.question) ?"
+        disableButton()
     }
     
     @objc func backButtonClicked() {
@@ -104,6 +124,7 @@ class GameView: UIViewController {
         collectionView.sendSubview(toBack: cell)
         guard let size = cellSize else { return }
         selectedCell?.frame = UICollectionViewCell.init(frame: size).frame
+        disableButton()
     }
     
     func getNextQuestion() {
@@ -152,9 +173,27 @@ extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func animateSelectedCell(cell: UICollectionViewCell) {
+        enableButton()
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
             cell.frame = self.collectionView.bounds
             self.collectionView.isScrollEnabled = false
         }, completion: nil)
+    }
+    
+    func disableButton() {
+        checkAnswer.isEnabled = false
+        checkAnswer.alpha = 0.7
+    }
+    
+    func enableButton() {
+        checkAnswer.isEnabled = true
+        checkAnswer.alpha = 1
+    }
+    
+    func createAlertController() {
+        let alertController = UIAlertController(title: "No Network", message: "Please ensure that you are connected to the network.", preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(OKAction)
     }
 }
