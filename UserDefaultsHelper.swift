@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserdefaultsHelper {
+class UserDefaultsHelper {
     static func canUseCellularData() -> Bool {
         return UserDefaults.standard.bool(forKey: "canUseCellularData")
     }
@@ -18,10 +18,14 @@ class UserdefaultsHelper {
     }
     
     static func isFirstTimeLaunch() -> Bool {
-        return UserDefaults.standard.bool(forKey: "isFirstTimeLaunch")
+        let isFirstUseString = UserDefaults.standard.string(forKey: "isFirstTimeLaunch")
+        if isFirstUseString == nil {
+            return true
+        }
+        return false
     }
     
-    static func setIsFirstTimeLaunch(isFirstTime: String) {
-        UserDefaults.standard.set(isFirstTime, forKey: "isFirstTimeLaunch")
+    static func setIsFirstTimeLaunch() {
+        UserDefaults.standard.set("launched", forKey: "isFirstTimeLaunch")
     }
 }

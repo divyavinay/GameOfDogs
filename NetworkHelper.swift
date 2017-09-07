@@ -31,4 +31,19 @@ struct NetworkkHelper {
         let needsConnection = flags.contains(.connectionRequired)
         return (isReachable && !needsConnection)
     }
+    
+    func requestCellarDataUse() {
+        let alertController = UIAlertController(title: "Celluar Data request", message: "This application will use network connection. If there is no WiFi connection, do you want to continue playing this game using your cellular connection ?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "YES", style: .default) { (action) in
+            UserDefaultsHelper.setCanUseCellularData(canUse: true)
+            UserDefaultsHelper.setIsFirstTimeLaunch()
+        }
+        let noAction = UIAlertAction(title: "NO", style: .default) { (action) in
+            UserDefaultsHelper.setCanUseCellularData(canUse: false)
+            UserDefaultsHelper.setIsFirstTimeLaunch()
+        }
+        UIApplication.topViewController()?.present(alertController, animated: true, completion: nil)
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+    }
 }
