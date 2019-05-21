@@ -13,6 +13,6 @@ import UIKit
 extension AppDelegate {
     func setupNavigationBarUI() {
         UINavigationBar.appearance().barTintColor = UIColor.hexStringToUIColor(hex: "A9CE41")
-        UINavigationBar.appearance().titleTextAttributes = [ NSFontAttributeName: UIFont(name: "Chalkduster", size: 20)!, NSForegroundColorAttributeName: UIColor.white]
+        UINavigationBar.appearance().titleTextAttributes = [ NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 }

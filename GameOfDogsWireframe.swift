@@ -12,6 +12,7 @@ import UIKit
 
 protocol WirefameProtocol {
     func navigateToScoresView(score: Int, view: UIViewController)
+    func navigateToLandingView(view: UIViewController)
 }
 
 class GameOfDogsWireframe: WirefameProtocol {
@@ -22,4 +23,12 @@ class GameOfDogsWireframe: WirefameProtocol {
         let navController = UINavigationController(rootViewController: scoresView)
         view.present(navController, animated:true, completion: nil)
     }
+    
+    func navigateToLandingView(view: UIViewController) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let landingView = storyBoard.instantiateViewController(withIdentifier: "landingViewID") as! LandingView
+        view.present(landingView, animated:true, completion: nil)
+    }
 }
+
+

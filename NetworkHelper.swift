@@ -16,10 +16,10 @@ struct NetworkkHelper {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_family = sa_family_t(AF_INET)
-        
+    
         let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
-            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
-                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+        $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+        SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
             }
         }
         
@@ -27,9 +27,16 @@ struct NetworkkHelper {
         if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
             return false
         }
+        
         let isReachable = flags.contains(.reachable)
+        let isCellular = flags.contains(.isWWAN)
+        let hasCellularConsent = UserDefaultsHelper.canUseCellularData()
         let needsConnection = flags.contains(.connectionRequired)
-        return (isReachable && !needsConnection)
+
+        if isCellular && hasCellularConsent { return true }
+        if isCellular && !hasCellularConsent { return false }
+    
+        return isReachable && !needsConnection
     }
     
     func requestCellarDataUse() {

@@ -26,7 +26,7 @@ class GameView: UIViewController {
     private var question: String = ""
     
     // protocols
-    private var wireframe: WirefameProtocol!
+    fileprivate var wireframe: WirefameProtocol!
     private var random: RandomQuestionHelperProtocol!
     fileprivate var presenter: PresenterProtocol!
     fileprivate var interactor: InteractorProtocol!
@@ -112,7 +112,6 @@ class GameView: UIViewController {
     }
     
     func generateQuestion() {
-        
         let questionConstant = "Which of these dogs is a"
         question = random.randomDogPicker(listOfFourDogs: questionBank)
         self.questionLabel.text = "\(questionConstant) \(self.question) ?"
@@ -120,10 +119,11 @@ class GameView: UIViewController {
     }
     
     @objc func backButtonClicked() {
-        guard let cell = selectedCell else { return }
-        collectionView.sendSubview(toBack: cell)
+        guard let cell = selectedCell as? DogCollectionViewCell else { return }
+        collectionView.sendSubviewToBack(cell)
         guard let size = cellSize else { return }
         selectedCell?.frame = UICollectionViewCell.init(frame: size).frame
+        cell.setClick(value: 0)
         disableButton()
     }
     
@@ -149,12 +149,15 @@ extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DogCollectionViewCell
+        cell.isUserInteractionEnabled = false
+        
         cell.activityIndicator.startAnimating()
         let dogName = questionBank[indexPath.row]
         presenter.fetchImage(dogBreedName: dogName) { (downloadedImage) in
             DispatchQueue.main.async() {
                 cell.dogImage.image = downloadedImage
                 cell.activityIndicator.stopAnimating()
+                cell.isUserInteractionEnabled = true
                 cell.activityIndicator.isHidden = true
             }
         }
@@ -163,13 +166,16 @@ extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        cell.superview?.bringSubview(toFront: cell)
-        selectedCell = collectionView.cellForItem(at: indexPath) as? DogCollectionViewCell
-        cellSize = selectedCell?.frame
-        backButton?.addTarget(self, action: #selector(self.backButtonClicked), for: .touchUpInside)
-        animateSelectedCell(cell: cell)
-        selectedDog = questionBank[indexPath.row]
+        guard let cell = collectionView.cellForItem(at: indexPath) as? DogCollectionViewCell else { return }
+        if cell.getNumberOFClicks() < 1 {
+            cell.superview?.bringSubviewToFront(cell)
+            selectedCell = collectionView.cellForItem(at: indexPath) as? DogCollectionViewCell
+            cellSize = selectedCell?.frame
+            backButton?.addTarget(self, action: #selector(self.backButtonClicked), for: .touchUpInside)
+            cell.setClick(value: nil)
+            animateSelectedCell(cell: cell)
+            selectedDog = questionBank[indexPath.row]
+        }
     }
     
     func animateSelectedCell(cell: UICollectionViewCell) {
@@ -182,18 +188,24 @@ extension GameView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func disableButton() {
         checkAnswer.isEnabled = false
+        backButton?.isEnabled = false
         checkAnswer.alpha = 0.7
+        backButton?.alpha = 0.7
     }
     
     func enableButton() {
         checkAnswer.isEnabled = true
+        backButton?.isEnabled = true
         checkAnswer.alpha = 1
+        backButton?.alpha = 1
     }
     
     func createAlertController() {
         let alertController = UIAlertController(title: "No Network", message: "Please ensure that you are connected to the network.", preferredStyle: .alert)
         self.present(alertController, animated: true, completion: nil)
-        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
+        self.wireframe.navigateToLandingView(view: self)
+        }
         alertController.addAction(OKAction)
     }
 }
